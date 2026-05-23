@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>SERA Giveaway — Win a 60 Day Supply</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #F2F0ED; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; min-height: 100vh; padding: 40px 20px; }
+
+    .wrap { max-width: 560px; margin: 0 auto; }
+
+    /* HEADER */
+    .header { background: #FFFFFF; border: 1px solid #E8E4DF; border-bottom: none; border-radius: 16px 16px 0 0; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; }
+    .header-brand { font-size: 22px; letter-spacing: 4px; color: #1A1814; font-weight: 600; }
+    .header-sub { font-size: 11px; color: #9C9490; letter-spacing: 1px; }
+
+    /* HERO */
+    .hero { background: linear-gradient(160deg, #F4C4A8 0%, #D4A8E8 100%); padding: 48px 32px; text-align: center; }
+    .hero-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 3px; color: rgba(26,24,20,0.5); text-transform: uppercase; margin-bottom: 14px; }
+    .hero-title { font-size: 38px; font-weight: 300; color: #1A1814; line-height: 1.1; margin-bottom: 14px; font-style: italic; }
+    .hero-sub { font-size: 14px; color: #5C5650; line-height: 1.6; max-width: 360px; margin: 0 auto; }
+
+    /* PRIZES */
+    .prizes { background: #FFFFFF; padding: 28px 32px; border-left: 1px solid #E8E4DF; border-right: 1px solid #E8E4DF; }
+    .prizes-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #9C9490; text-transform: uppercase; margin-bottom: 14px; }
+    .prize { border-radius: 10px; padding: 16px 20px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+    .prize-1 { background: linear-gradient(135deg, rgba(244,196,168,0.3), rgba(212,168,232,0.3)); border: 1px solid rgba(212,168,232,0.2); }
+    .prize-2 { background: #F9F7F4; border: 1px solid #E8E4DF; }
+    .prize-badge { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #9C9490; margin-bottom: 4px; }
+    .prize-name { font-size: 15px; font-weight: 600; color: #1A1814; margin-bottom: 2px; }
+    .prize-sub { font-size: 12px; color: #7A6E65; }
+    .prize-val { font-size: 24px; font-weight: 300; color: #1A1814; white-space: nowrap; padding-left: 12px; }
+
+    /* DIVIDER */
+    .divider { height: 1px; background: #E8E4DF; margin: 0 32px; }
+
+    /* QUIZ */
+    .quiz { background: #FFFFFF; padding: 32px 32px; border-left: 1px solid #E8E4DF; border-right: 1px solid #E8E4DF; }
+    .quiz-intro { font-size: 13px; color: #7A6E65; line-height: 1.6; margin-bottom: 28px; }
+
+    .progress-wrap { margin-bottom: 28px; }
+    .progress-top { display: flex; justify-content: space-between; font-size: 11px; color: #9C9490; margin-bottom: 6px; }
+    .progress-track { background: #F0EDE9; border-radius: 20px; height: 4px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 20px; background: linear-gradient(90deg, #F4C4A8, #D4A8E8); transition: width 0.4s ease; }
+
+    .question { display: none; }
+    .question.active { display: block; }
+    .question-num { font-size: 9px; font-weight: 700; letter-spacing: 2px; color: #D4A8E8; text-transform: uppercase; margin-bottom: 8px; }
+    .question-text { font-size: 18px; font-weight: 500; color: #1A1814; line-height: 1.3; margin-bottom: 20px; }
+
+    .options { display: flex; flex-direction: column; gap: 8px; }
+    .option { border: 1.5px solid #E8E4DF; border-radius: 10px; padding: 14px 18px; font-size: 14px; color: #5C5650; cursor: pointer; transition: all 0.15s; background: #FAFAF8; text-align: left; font-family: inherit; width: 100%; }
+    .option:hover { border-color: #D4A8E8; background: rgba(212,168,232,0.06); color: #1A1814; }
+    .option.selected { border-color: #D4A8E8; background: rgba(212,168,232,0.12); color: #1A1814; font-weight: 500; }
+
+    /* EMAIL STEP */
+    .email-step { display: none; }
+    .email-step.active { display: block; }
+    .email-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #9C9490; text-transform: uppercase; margin-bottom: 6px; display: block; }
+    .email-input { width: 100%; padding: 14px 18px; border: 1.5px solid #E8E4DF; border-radius: 10px; font-size: 15px; font-family: inherit; color: #1A1814; background: #FAFAF8; outline: none; transition: border-color 0.15s; margin-bottom: 8px; }
+    .email-input:focus { border-color: #D4A8E8; }
+    .name-input { width: 100%; padding: 14px 18px; border: 1.5px solid #E8E4DF; border-radius: 10px; font-size: 15px; font-family: inherit; color: #1A1814; background: #FAFAF8; outline: none; transition: border-color 0.15s; margin-bottom: 16px; }
+    .name-input:focus { border-color: #D4A8E8; }
+
+    .btn-primary { display: block; width: 100%; padding: 16px 24px; background: #1A1814; color: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border: none; border-radius: 999px; cursor: pointer; transition: opacity 0.15s; margin-top: 4px; }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .btn-next { display: block; width: 100%; padding: 14px 24px; background: #1A1814; color: #FFFFFF; font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border: none; border-radius: 999px; cursor: pointer; margin-top: 20px; transition: opacity 0.15s; }
+    .btn-next:disabled { opacity: 0.3; cursor: not-allowed; }
+    .btn-next:hover:not(:disabled) { opacity: 0.85; }
+
+    .error-msg { font-size: 12px; color: #E24B4A; margin-top: 6px; display: none; }
+
+    .legal { font-size: 11px; color: #C0BBB6; text-align: center; line-height: 1.6; margin-top: 12px; }
+
+    /* FOOTER */
+    .footer { background: #F9F7F4; border: 1px solid #E8E4DF; border-top: none; border-radius: 0 0 16px 16px; padding: 20px 32px; text-align: center; }
+    .footer-text { font-size: 11px; color: #9C9490; letter-spacing: 1px; }
+
+    /* SUCCESS */
+    .success-screen { display: none; background: #FFFFFF; border: 1px solid #E8E4DF; border-top: none; border-bottom: none; padding: 48px 32px; text-align: center; }
+    .success-screen.active { display: block; }
+    .success-icon { font-size: 48px; margin-bottom: 16px; }
+    .success-title { font-size: 32px; font-weight: 300; color: #1A1814; font-style: italic; margin-bottom: 12px; }
+    .success-sub { font-size: 14px; color: #7A6E65; line-height: 1.6; margin-bottom: 28px; max-width: 360px; margin-left: auto; margin-right: auto; }
+    .success-code { background: linear-gradient(135deg, rgba(244,196,168,0.2), rgba(212,168,232,0.2)); border: 1.5px dashed #D4A8E8; border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+    .success-code-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #9C9490; text-transform: uppercase; margin-bottom: 8px; }
+    .success-code-val { font-size: 28px; font-weight: 700; color: #1A1814; letter-spacing: 3px; }
+    .success-code-sub { font-size: 12px; color: #7A6E65; margin-top: 6px; }
+    .success-btn { display: inline-block; padding: 14px 40px; background: #1A1814; color: #FFFFFF; font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border-radius: 999px; text-decoration: none; }
+    .success-ig { font-size: 13px; color: #7A6E65; margin-top: 20px; line-height: 1.6; }
+    .success-ig strong { color: #1A1814; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-brand">SERA</div>
+    <div class="header-sub">HYDRATE THE MIND</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Giveaway — 14 Days Only</div>
+    <div class="hero-title">Win 60 days<br>of clarity.</div>
+    <div class="hero-sub">Answer 5 quick questions and enter your email for a chance to win a 60 Day Supply of SERA. No purchase necessary.</div>
+  </div>
+
+  <!-- PRIZES -->
+  <div class="prizes">
+    <div class="prizes-label">What's up for grabs</div>
+    <div class="prize prize-1">
+      <div>
+        <div class="prize-badge">🏆 Top Prize — 1 Winner</div>
+        <div class="prize-name">60 Day Supply of SERA</div>
+        <div class="prize-sub">2 boxes · 60 sachets · Ships worldwide</div>
+      </div>
+      <div class="prize-val">$150</div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- QUIZ -->
+  <div class="quiz" id="quiz-section">
+    <div class="quiz-intro">Answer 5 quick questions to enter the draw. Takes less than 60 seconds — and helps us build a better product.</div>
+
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span id="progress-label">Question 1 of 5</span>
+        <span id="progress-pct">20%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-bar" style="width:20%;"></div>
+      </div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="question active" id="q1">
+      <div class="question-num">Question 1 of 5</div>
+      <div class="question-text">What's your biggest productivity block?</div>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, 'q1')">Afternoon energy crash</button>
+        <button class="option" onclick="selectOption(this, 'q1')">Difficulty focusing for long periods</button>
+        <button class="option" onclick="selectOption(this, 'q1')">Brain fog and mental fatigue</button>
+        <button class="option" onclick="selectOption(this, 'q1')">Relying on caffeine to function</button>
+        <button class="option" onclick="selectOption(this, 'q1')">Poor sleep affecting next-day performance</button>
+      </div>
+      <button class="btn-next" id="next-1" disabled onclick="nextQuestion(1)">Next →</button>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question" id="q2">
+      <div class="question-num">Question 2 of 5</div>
+      <div class="question-text">Have you tried nootropics before?</div>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, 'q2')">Yes — and they worked well</button>
+        <button class="option" onclick="selectOption(this, 'q2')">Yes — but didn't notice much difference</button>
+        <button class="option" onclick="selectOption(this, 'q2')">No — never tried them</button>
+        <button class="option" onclick="selectOption(this, 'q2')">Not sure what nootropics are</button>
+      </div>
+      <button class="btn-next" id="next-2" disabled onclick="nextQuestion(2)">Next →</button>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question" id="q3">
+      <div class="question-num">Question 3 of 5</div>
+      <div class="question-text">When do you feel your energy drop most?</div>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, 'q3')">Mid-morning (10–11am)</button>
+        <button class="option" onclick="selectOption(this, 'q3')">After lunch (12–2pm)</button>
+        <button class="option" onclick="selectOption(this, 'q3')">Mid-afternoon (2–4pm)</button>
+        <button class="option" onclick="selectOption(this, 'q3')">Late afternoon (4–6pm)</button>
+        <button class="option" onclick="selectOption(this, 'q3')">It's pretty consistent all day</button>
+      </div>
+      <button class="btn-next" id="next-3" disabled onclick="nextQuestion(3)">Next →</button>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question" id="q4">
+      <div class="question-num">Question 4 of 5</div>
+      <div class="question-text">How many coffees do you drink per day?</div>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, 'q4')">None — I don't drink coffee</button>
+        <button class="option" onclick="selectOption(this, 'q4')">1 cup</button>
+        <button class="option" onclick="selectOption(this, 'q4')">2–3 cups</button>
+        <button class="option" onclick="selectOption(this, 'q4')">4–5 cups</button>
+        <button class="option" onclick="selectOption(this, 'q4')">More than 5 — don't judge me</button>
+      </div>
+      <button class="btn-next" id="next-4" disabled onclick="nextQuestion(4)">Next →</button>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question" id="q5">
+      <div class="question-num">Question 5 of 5</div>
+      <div class="question-text">What do you currently use to stay focused?</div>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, 'q5')">Coffee / caffeine</button>
+        <button class="option" onclick="selectOption(this, 'q5')">Energy drinks</button>
+        <button class="option" onclick="selectOption(this, 'q5')">Supplements or nootropics</button>
+        <button class="option" onclick="selectOption(this, 'q5')">Nothing — just push through</button>
+        <button class="option" onclick="selectOption(this, 'q5')">A mix of things</button>
+      </div>
+      <button class="btn-next" id="next-5" disabled onclick="nextQuestion(5)">Next →</button>
+    </div>
+
+    <!-- EMAIL STEP -->
+    <div class="email-step" id="email-step">
+      <div class="question-num" style="display:block;margin-bottom:8px;">Last step</div>
+      <div class="question-text">Enter your details to complete your entry.</div>
+
+      <label class="email-label" for="first-name">First name</label>
+      <input class="name-input" type="text" id="first-name" placeholder="Your first name" oninput="checkEmail()">
+
+      <label class="email-label" for="email">Email address</label>
+      <input class="email-input" type="email" id="email" placeholder="your@email.com" oninput="checkEmail()">
+
+      <div class="error-msg" id="error-msg">Please enter a valid email address.</div>
+
+      <div style="display:flex;align-items:flex-start;gap:10px;margin:16px 0;padding:14px 16px;background:#F9F7F4;border:1px solid #E8E4DF;border-radius:10px;">
+        <input type="checkbox" id="consent" onchange="checkEmail()" style="margin-top:2px;width:16px;height:16px;accent-color:#1A1814;flex-shrink:0;cursor:pointer;">
+        <label for="consent" style="font-size:12px;color:#7A6E65;line-height:1.5;cursor:pointer;">I agree to receive emails from SERA including my giveaway entry confirmation, discount code, and occasional product updates. I can unsubscribe at any time.</label>
+      </div>
+
+      <button class="btn-primary" id="submit-btn" disabled onclick="submitEntry()">ENTER THE GIVEAWAY →</button>
+
+      <div class="legal">By entering you agree to receive emails from SERA. One entry per person. Draw closes in 14 days. Winner contacted by email. Promoter: SERA, Gold Coast QLD.</div>
+    </div>
+
+  </div>
+
+  <!-- SUCCESS SCREEN -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-icon">🎉</div>
+    <div class="success-title">You're in.</div>
+    <div class="success-sub">You've been entered into the draw for a 60 Day Supply of SERA. As a thank you for taking the time — here's something we don't advertise.</div>
+
+    <div class="success-code">
+      <div class="success-code-label">Your 10% off code</div>
+      <div class="success-code-val">GIVEAWAY10</div>
+      <div class="success-code-sub">Apply at checkout · drinksera.com</div>
+    </div>
+
+    <a href="https://drinksera.com/products/sera-orange-clarity" class="success-btn">SHOP SERA — 10% OFF</a>
+
+    <div class="success-ig">
+      <strong>Don't forget:</strong> Follow <strong>@drink.sera</strong> on Instagram and tag a mate in the giveaway post for your entry to count.<br><br>
+      Draw closes in 14 days. Winner announced on <strong>@drink.sera</strong> and contacted by email.
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-text">SERA &nbsp;·&nbsp; drinksera.com &nbsp;·&nbsp; lewis@drinksera.com</div>
+  </div>
+
+</div>
+
+<script>
+  var answers = { q1: '', q2: '', q3: '', q4: '', q5: '' };
+  var currentQ = 1;
+
+  function selectOption(btn, qId) {
+    var options = btn.parentElement.querySelectorAll('.option');
+    options.forEach(function(o) { o.classList.remove('selected'); });
+    btn.classList.add('selected');
+    answers[qId] = btn.textContent.trim();
+    var nextBtn = document.getElementById('next-' + qId.replace('q', ''));
+    if (nextBtn) nextBtn.disabled = false;
+  }
+
+  function nextQuestion(num) {
+    document.getElementById('q' + num).classList.remove('active');
+    currentQ = num + 1;
+
+    if (currentQ <= 5) {
+      document.getElementById('q' + currentQ).classList.add('active');
+      updateProgress(currentQ, 5);
+    } else {
+      document.getElementById('email-step').classList.add('active');
+      document.getElementById('progress-label').textContent = 'Almost done';
+      document.getElementById('progress-pct').textContent = '100%';
+      document.getElementById('progress-bar').style.width = '100%';
+    }
+  }
+
+  function updateProgress(current, total) {
+    var pct = Math.round((current / total) * 100);
+    document.getElementById('progress-label').textContent = 'Question ' + current + ' of ' + total;
+    document.getElementById('progress-pct').textContent = pct + '%';
+    document.getElementById('progress-bar').style.width = pct + '%';
+  }
+
+  function checkEmail() {
+    var email = document.getElementById('email').value;
+    var name = document.getElementById('first-name').value;
+    var consent = document.getElementById('consent').checked;
+    var valid = email.includes('@') && email.includes('.') && name.length > 0 && consent;
+    document.getElementById('submit-btn').disabled = !valid;
+  }
+
+  function submitEntry() {
+    var email = document.getElementById('email').value;
+    var firstName = document.getElementById('first-name').value;
+
+    if (!email.includes('@')) {
+      document.getElementById('error-msg').style.display = 'block';
+      return;
+    }
+
+    // Klaviyo identify + track
+    var _learnq = window._learnq || [];
+
+    _learnq.push(['identify', {
+      '$email': email,
+      '$first_name': firstName,
+      'Giveaway_Entry': true,
+      'Productivity_Block': answers.q1,
+      'Tried_Nootropics': answers.q2,
+      'Energy_Drop_Time': answers.q3,
+      'Coffees_Per_Day': answers.q4,
+      'Current_Focus_Method': answers.q5
+    }]);
+
+    _learnq.push(['track', 'Giveaway Entry', {
+      'First Name': firstName,
+      'Email': email,
+      'Productivity Block': answers.q1,
+      'Tried Nootropics': answers.q2,
+      'Energy Drop Time': answers.q3,
+      'Coffees Per Day': answers.q4,
+      'Current Focus Method': answers.q5
+    }]);
+
+    // Subscribe to Klaviyo Email List (Sie8tm = your Email List ID)
+    fetch('https://a.klaviyo.com/client/subscriptions/?company_id=Rfty5q', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'revision': '2023-12-15'
+      },
+      body: JSON.stringify({
+        data: {
+          type: 'subscription',
+          attributes: {
+            profile: {
+              data: {
+                type: 'profile',
+                attributes: {
+                  email: email,
+                  first_name: firstName,
+                  properties: {
+                    Giveaway_Entry: true,
+                    Productivity_Block: answers.q1,
+                    Tried_Nootropics: answers.q2,
+                    Energy_Drop_Time: answers.q3,
+                    Coffees_Per_Day: answers.q4,
+                    Current_Focus_Method: answers.q5
+                  }
+                }
+              }
+            }
+          },
+          relationships: {
+            list: {
+              data: {
+                type: 'list',
+                id: 'Sie8tm'
+              }
+            }
+          }
+        }
+      })
+    });
+
+    // Show success
+    document.getElementById('quiz-section').style.display = 'none';
+    document.getElementById('success-screen').classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+
+<!-- Replace Rfty5q with your actual Klaviyo public API key -->
+<script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=Rfty5q"></script>
+
+</body>
+</html>
